@@ -34,3 +34,31 @@ body {
 .role-btn.active {
     background: var(--primary); color: white; 
 }
+
+.form-group { 
+    margin-bottom: 18px;
+}
+
+label {
+    display: block; color: var(--text-muted); margin-bottom: 6px; font-size: 0.9rem; 
+}
+
+input, select, textarea { 
+    width: 100%; padding: 11px 14px; background: var(--bg-dark); border: 1px solid var(--border); color: var(--text-main); border-radius: 8px; outline:  none; 
+}
+
+input:focus, select:focus, textarea:focus { 
+    border-color: var(--primary);
+}
+
+.btn { 
+    background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: inline-flex;  align-items: center; gap: 8px; justify-content: center;
+}
+
+.btn:hover { 
+    background: var(--primary-dark); 
+}
+
+.logo { 
+    font-size: 1.4rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px;
+}
