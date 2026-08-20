@@ -35,10 +35,6 @@ body {
     background: var(--primary); color: white; 
 }
 
-.form-group { 
-    margin-bottom: 18px;
-}
-
 label {
     display: block; color: var(--text-muted); margin-bottom: 6px; font-size: 0.9rem; 
 }
@@ -51,14 +47,204 @@ input:focus, select:focus, textarea:focus {
     border-color: var(--primary);
 }
 
-.btn { 
-    background: var(--primary); color: white; border: none; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; display: inline-flex;  align-items: center; gap: 8px; justify-content: center;
+/* MAIN DASHBOARD STYLING */
+
+.app-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: none;
 }
 
-.btn:hover { 
-    background: var(--primary-dark); 
+/* NAVIGATION BAR */
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    background: var(--card-bg);
+    border-radius: 12px;
+    margin-bottom: 25px;
+    border: 1px solid var(--border);
 }
 
-.logo { 
-    font-size: 1.4rem; font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px;
+/* LOGO */
+.logo {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* USER PROFILE */
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* CARDS */
+.card {
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    margin-bottom: 20px;
+}
+
+/* CARD TITLE */
+.card-title {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* FORM */
+.form-group {
+    margin-bottom: 18px;
+}
+
+/* IMAGE UPLOAD AREA */
+.upload-dropzone {
+    border: 2px dashed var(--border);
+    padding: 30px;
+    text-align: center;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.upload-dropzone:hover {
+    border-color: var(--primary);
+    background: rgba(16, 185, 129, 0.05);
+}
+
+/* MAP AREA */
+.map-mock {
+    height: 200px;
+    background: #0c1322;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 1px solid var(--border);
+}
+
+/* Map Location Pin */
+.map-pin {
+    color: #ef4444;
+    font-size: 1.8rem;
+    position: absolute;
+}
+
+/* BUTTON */
+
+.btn {
+    background: var(--primary);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Button Hover */
+.btn:hover {
+    background: var(--primary-dark);
+}
+
+/* Outline Button */
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-main);
+}
+
+/* Danger Button */
+.btn-danger {
+    background: #ef4444;
+}
+
+/* Danger Button Hover */
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+/* STATUS BADGES */
+.badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+/* Pending */
+.badge-pending {
+    background: rgba(245, 158, 11, 0.2);
+    color: var(--accent-orange);
+}
+
+/* Assigned */
+.badge-assigned {
+    background: rgba(59, 130, 246, 0.2);
+    color: var(--accent-blue);
+}
+
+/* Completed */
+.badge-completed {
+    background: rgba(16, 185, 129, 0.2);
+    color: var(--primary);
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.9rem;
+}
+
+th {
+    color: var(--text-muted);
+}
+
+/* ROLE PANELS */
+
+.role-panel {
+    display: none;
+}
+
+.role-panel.active {
+    display: block;
+}
+
+/* PANEL LAYOUT*/
+
+.panel-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+/* RESPONSIVE DESIGN */
+
+@media (min-width: 900px) {
+    .panel-split {
+        grid-template-columns: 1fr 1fr;
+    }
 }
