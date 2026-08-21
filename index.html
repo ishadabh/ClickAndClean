@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>CleanCity - Waste Management Portal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+          rel="stylesheet">
 </head>
 <body>
     
@@ -27,12 +28,12 @@
 
         <form onsubmit="handleLogin(event)">
             <div class="form-group">
-                <label id="login-label">Email or Phone Number</label>
-                <input type="text" id="login-id" placeholder="user@cleancity.com" required>
+                <label for="login-id" id="login-label">Email or Phone Number</label>
+                <input type="text" id="login-id" name="loginId" placeholder="user@cleancity.com" required>
             </div>
             <div class="form-group">
-                <label>Password</label>
-                <input type="password" value="••••••••" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter Password" required>
             </div>
             <button type="submit" class="btn" style="width: 100%; padding: 12px;">
                 <i class="fa-solid fa-right-to-bracket"></i> Login to Workspace
@@ -67,15 +68,15 @@
                     </div>
                     <form onsubmit="handleReportSubmit(event)">
                         <div class="form-group">
-                            <label>Upload Incident Photo</label>
+                            <label for="file-input">Upload Incident Photo</label>
                             <div class="upload-dropzone" onclick="document.getElementById('file-input').click()">
                                 <i class="fa-solid fa-cloud-arrow-up" style="font-size: 2rem; color: var(--primary); margin-bottom: 8px;"></i>
                                 <p id="upload-label">Click to select photo</p>
-                                <input type="file" id="file-input" hidden accept="image/*" onchange="previewImage(this)">
+                                <input type="file" id="file-input" name="incidentPhoto" hidden accept="image/*" onchange="previewImage(this)">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Location Selection</label>
+                            <span style="display: block; font-weight: 600; margin-bottom: 5px;">Location Selection</span>
                             <button type="button" class="btn btn-outline" style="width: 100%; margin-bottom: 10px;" onclick="autoDetectLocation()">
                                 <i class="fa-solid fa-location-crosshairs"></i> Detect Current GPS
                             </button>
@@ -85,8 +86,8 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Issue Description</label>
-                            <textarea id="issue-desc" rows="2" placeholder="Describe garbage type and situation..." required></textarea>
+                            <label for="issue-desc">Issue Description</label>
+                            <textarea id="issue-desc" name="issueDescription" rows="2" placeholder="Describe garbage type and situation..." required></textarea>
                         </div>
                         <button type="submit" class="btn" style="width: 100%;"><i class="fa-solid fa-paper-plane"></i> Submit Incident (+50 PTS)</button>
                     </form>
@@ -123,7 +124,7 @@
             <div class="card">
                 <div class="card-title">
                     <span><i class="fa-solid fa-chart-pie"></i> Master Complaints Queue</span>
-                    <select id="admin-filter" style="width: auto;" onchange="filterAdminTable()">
+                    <select id="admin-filter" name="adminFilter" style="width: auto;" onchange="filterAdminTable()">
                         <option value="all">All Complaints</option>
                         <option value="Pending">Pending Only</option>
                         <option value="Assigned">Assigned Only</option>
@@ -146,7 +147,7 @@
                             <td>Construction debris block route</td>
                             <td><span class="badge badge-pending">Pending</span></td>
                             <td>
-                                <select class="team-assignee">
+                                <select class="team-assignee" name="teamAssignee">
                                     <option value="">Select Vehicle Unit...</option>
                                     <option value="Truck Alpha">Truck Alpha (North)</option>
                                     <option value="Truck Beta">Truck Beta (South)</option>
@@ -186,5 +187,6 @@
             </div>
         </div>
     </div>
+    <script src="script.js" > </script>
 </body>
 </html>
