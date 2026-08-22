@@ -18,27 +18,17 @@ public class LoginServlet extends HttpServlet {
 
     private UserDAO userDAO;
 
-    @Override
     public void init() {
 
         userDAO = new UserDAO();
     }
 
-    @Override
-    protected void doPost(
-            HttpServletRequest request,
-            HttpServletResponse response)
-            throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
 
-    	String loginId = request.getParameter("loginId") != null ? request.getParameter("loginId").trim() : "";
-    	String password = request.getParameter("password") != null ? request.getParameter("password").trim() : "";
-    	String role = request.getParameter("role") != null ? request.getParameter("role").trim() : "";
+    	String loginId = request.getParameter("loginId");
+    	String password = request.getParameter("password");
+    	String role = request.getParameter("role");
 
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
-        PrintWriter out = response.getWriter();
-      
         User user = userDAO.validateUser(loginId,password,role);
 
         if (user != null) {
@@ -48,31 +38,13 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("user", user);
             session.setAttribute("userId", user.getUserId());
             session.setAttribute("role", user.getRole());
-
-            out.print("""
-                    {
-                        "success": true,
-                        "message": "Login successful",
-                        "userId": %d,
-                        "name": "%s",
-                        "role": "%s",
-                        "points": %d
-                    }
-                    """.formatted(
-                    user.getUserId(),
-                    user.getName(),
-                    user.getRole(),
-                    user.getPoints()
-            ));
-
+            response.sendRedirect("dashboard");
+            
         } else {
+            request.setAttribute("error","Invalid login ID, password or role.");
 
-            out.print("""
-                    {
-                        "success": false,
-                        "message": "Invalid login ID, password or role"
-                    }
-                    """);
+            RequestDispatcher reqDis =request.getRequestDispatcher("index.jsp");
+            reqDis.forward(request, response);
         }
     }
 }
