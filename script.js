@@ -136,3 +136,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 });
+
+/* IMAGE PREVIEW HELPER */
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const label = document.getElementById('upload-label');
+        if (label) {
+            label.textContent = input.files[0].name;
+        }
+    }
+}
