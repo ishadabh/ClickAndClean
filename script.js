@@ -62,3 +62,77 @@ function handleLogin(event) {
         alert('Unable to connect to server.');
     });
 }
+
+// Map API from LEAFLET
+/* 2. DASHBOARD LOCATION MAP, GPS & FILE UPLOAD LOGIC */
+document.addEventListener("DOMContentLoaded", function () {
+    const mapContainer = document.getElementById('map');
+    if (!mapContainer) return; // Safely exit if not on dashboard page
+
+    // Default coordinates (e.g., New Delhi coordinates)
+    const defaultLat = 28.6139;
+    const defaultLng = 77.2090;
+
+    // Initialize Leaflet Map
+    const map = L.map('map').setView([defaultLat, defaultLng], 13);
+
+	L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	        maxZoom: 19
+	    }).addTo(map);
+
+    let marker = null;
+
+    // Helper: Formats coordinates into "lat, lng" and populates input fields
+    function updateLocation(lat, lng) {
+        const formattedCoords = `${lat.toFixed(6)}, ${lng.toFixed(6)}`;
+
+        // Populate main location text box
+        const locInput = document.getElementById('location');
+        if (locInput) locInput.value = formattedCoords;
+
+        // Populate hidden inputs
+        const latInput = document.getElementById('latitude');
+        const lngInput = document.getElementById('longitude');
+        if (latInput) latInput.value = lat.toFixed(6);
+        if (lngInput) lngInput.value = lng.toFixed(6);
+
+        // Place or move map marker
+        const coords = [lat, lng];
+        if (marker) {
+            marker.setLatLng(coords);
+        } else {
+            marker = L.marker(coords).addTo(map);
+        }
+        map.setView(coords, 15);
+    }
+
+    // --- OPTION 1: Map Click Event ---
+    map.on('click', function (e) {
+        updateLocation(e.latlng.lat, e.latlng.lng);
+    });
+
+    // --- OPTION 2: Detect GPS Button Event ---
+    const gpsBtn = document.getElementById('btn-detect-gps');
+    if (gpsBtn) {
+        gpsBtn.addEventListener('click', function () {
+            if (!navigator.geolocation) {
+                alert("Geolocation is not supported by your browser.");
+                return;
+            }
+
+            gpsBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Locating...';
+
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    updateLocation(position.coords.latitude, position.coords.longitude);
+                    gpsBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Detect Current GPS';
+                },
+                (error) => {
+                    alert("Unable to fetch location. Please allow GPS permissions in your browser.");
+                    gpsBtn.innerHTML = '<i class="fa-solid fa-location-crosshairs"></i> Detect Current GPS';
+                },
+                { enableHighAccuracy: true, timeout: 10000 }
+            );
+        });
+    }
+});
