@@ -274,3 +274,19 @@ th {
     margin-bottom: 15px;
     font-size: 0.9rem;
 }
+
+/* Leaflet Map Styling */
+
+#map, .map-container {
+    width: 100%;
+    height: 300px;
+    border-radius: 8px;
+    z-index: 1;
+}
+
+.leaflet-container {
+  background-color: var(--bg-dark);
+}
+#map {
+	margin-top: 10px
+}
