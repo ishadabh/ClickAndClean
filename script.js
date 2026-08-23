@@ -1,13 +1,24 @@
 let currentRole = 'user';
-let userPoints = 250;
 
 function selectRole(role, btn) {
     currentRole = role;
-    document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.role-btn').forEach(button => {
+        button.classList.remove('active');
+    });
     btn.classList.add('active');
+
+    // Target the hidden input id="role"
+    // here i get wrong ans of user for admin and driver  
+    const hiddenRoleInput = document.getElementById('role');
+    if (hiddenRoleInput) {
+        hiddenRoleInput.value = role;
+    }
 
     const label = document.getElementById('login-label');
     const input = document.getElementById('login-id');
+
+    if (!label || !input) return; 
+
     if (role === 'user') {
         label.innerText = 'Email or Phone Number';
         input.value = 'resident@cleancity.com';
