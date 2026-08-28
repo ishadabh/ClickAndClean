@@ -25,10 +25,8 @@ public class DBConnection {
 
     public static Connection getConnection() throws SQLException {
 
-        return DriverManager.getConnection(
-                URL,
-                USER,
-                PASSWORD
-        );
+        Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+        connection.setAutoCommit(true);
+        return connection;
     }
 }
