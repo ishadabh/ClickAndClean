@@ -12,15 +12,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
-import java.io.File;
 import java.io.IOException;
 
 @WebServlet("/report")
 
 // annotation to deals with file upload in servlet
-@MultipartConfig( fileSizeThreshold = 1024 * 1024 * 2,       // 2MB
-					maxFileSize = 1024 * 1024 * 10,        	 // 10MB
-						maxRequestSize = 1024 * 1024 * 50    // 50MB
+@MultipartConfig( location = "/Users/shadabhussain/Desktop/ClickAndClean_report_img",
+                    fileSizeThreshold = 1024 * 1024 * 2,       // 2MB 
+					    maxFileSize = 1024 * 1024 * 10,        	 // 10MB per file
+						    maxRequestSize = 1024 * 1024 * 50    // 50MB total request size limit
 )
 public class ReportServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -46,24 +46,30 @@ public class ReportServlet extends HttpServlet {
         String location = request.getParameter("location"); // Received as "28.613900, 77.209000"
 
         // 2. Handle File Upload
-        Part filePart = request.getPart("imageFile");
-        String imagePath = null;
+        Collection<Part> parts = request.getParts();
+        StringBuilder imagePaths = new StringBuilder();
 
-        if (filePart != null && filePart.getSize() > 0) {
-            String fileName = System.currentTimeMillis() + "_" + extractFileName(filePart);
-            
-            // Set storage directory path inside webapp/uploads
-            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
-            File uploadDir = new File(uploadPath);
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
+        for(Part part : parts) {
+            if("imageFile".equals(part.getName()) && part.getSize() > 0) {
+                String originalName = extractFileName(part);
+
+                if(originalName != null && !(originalName.isEmpty())) {
+
+                    String fileName = System.currentTimeMillis() + "_" + originalName;
+
+                    // Save file using location from @MultipartConfig
+                    part.write(fileName);
+
+                    if(fileName.length() > 0) {
+                        imagePaths.append(",");
+                    }
+                    imagePaths.append("uploads/").append(fileName);
+                }
             }
-
-            // Save file to server disk
-            filePart.write(uploadPath + File.separator + fileName);
-            imagePath = "uploads/" + fileName;
         }
 
+        String imagePath = imagePaths.toString();
+        
         // 3. Save to Database via DAO
         boolean success = reportDAO.createReport(userId, description, location, imagePath);
 
@@ -80,9 +86,11 @@ public class ReportServlet extends HttpServlet {
         String contentDisp = part.getHeader("content-disposition");
         for (String s : contentDisp.split(";")) {
             if (s.trim().startsWith("filename")) {
-                return s.substring(s.indexOf("=") + 2, s.length() - 1);
+            	int startIdx = s.indexOf("filename=") + 10;
+            	int endIdx = s.length() -1;
+                return s.substring(startIdx, endIdx);
             }
         }
-        return "incident.jpg";
+        return null;
     }
 }
