@@ -20,7 +20,6 @@ public class ReportDAO {
                 INSERT INTO reports
                 (user_id, description, location, status, reward)
                 VALUES (?, ?, ?, 'Pending', 50)
-                COMMIT
                 """;
 
         try (Connection connection = DBConnection.getConnection();
@@ -50,7 +49,6 @@ public class ReportDAO {
                 UPDATE users
                 SET points = points + 50
                 WHERE user_id = ?
-                COMMIT
                 """;
         try (PreparedStatement statement = connection.prepareStatement(sql)) {
         	
@@ -121,7 +119,6 @@ public class ReportDAO {
                 UPDATE reports
                 SET status = 'Assigned', assigned_driver = ?
                 WHERE report_id = ?
-                COMMIT
                 """;
         try (
             Connection connection = DBConnection.getConnection();
@@ -142,7 +139,7 @@ public class ReportDAO {
 
     public boolean completeReport(int reportId) {
 
-        String sql = """ UPDATE reports SET status = 'Completed' WHERE report_id = ? COMMIT""";
+        String sql = """ UPDATE reports SET status = 'Completed' WHERE report_id = ? """;
 
         try (
             Connection connection = DBConnection.getConnection();
