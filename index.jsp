@@ -43,6 +43,7 @@
     </div>
 
     <form action="login" method="post">
+    
         <input type="hidden" id="role" name="role" value="user">
 
         <div class="form-group">
@@ -67,6 +68,10 @@
             <i class="fa-solid fa-right-to-bracket"></i>
             Login to Workspace
         </button>
+        <div class="register-link">
+    			Don't have an account?
+    		<a href="${pageContext.request.contextPath}/register.jsp">Register</a>
+		</div>
     </form>
 </div>
 <script src="${pageContext.request.contextPath}/script.js"></script>
